@@ -17,7 +17,7 @@ threshold = sys.argv[3]
 foutput = str(sys.argv[4])
 #npysaveoption = sys.argv[5]#not here yet (option to save npy)
 
-if int(option) == 1 or str(option) == "d":#dicom
+if str(option) == "d": #dicom
 	tempNpy = dicom2numpy.main(fileHandler.dicomPath + slash + fname, fname)#not done
 	if argCount == 5:
 		numpy2obj.main(tempNpy, threshold, foutput)

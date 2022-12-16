@@ -14,10 +14,12 @@ import os
 import time
 import matplotlib.pyplot as plt
 from glob import glob
+
+import skimage
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import scipy.ndimage
-from skimage import morphology
-from skimage import measure
+import morphology
+import skimage.measure as measure
 from skimage.transform import resize
 from sklearn.cluster import KMeans
 import fileHandler
@@ -38,7 +40,7 @@ def make_mesh(image, threshold=300, step_size=1):
 	
 	print ("Calculating surface...")
 	#https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.marching_cubes_lewiner
-	verts, faces, norm, val = measure.marching_cubes_lewiner(p, threshold, step_size=step_size, allow_degenerate=True) 
+	verts, faces, norm, val = measure.marching_cubes(p, threshold, step_size=step_size, allow_degenerate=True)
 	return verts, faces, norm
 
 def getIO():
@@ -92,6 +94,7 @@ def main(mainFchoice, mainThreshold, outputName):
 	makeObj(mainFchoice, mainThreshold, outputName)
 
 if __name__ == '__main__':
+	lsIO = getIO()
 	lsIO = getIO()
 	tempInput = input("Please enter name for 'obj' file(without .obj extension), or leave blank for the same name as .npy:  ")
 	if str(tempInput) == "":

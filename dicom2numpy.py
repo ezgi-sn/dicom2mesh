@@ -1,12 +1,10 @@
+import os
+import time
 import numpy as np
 import pydicom as dicom
-import pydicom.pixel_data_handlers.gdcm_handler
-import os
-from glob import glob
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import scipy.ndimage
+
 import fileHandler
-import time
 
 slash = fileHandler.slash
 cwd = os.getcwd() + slash
@@ -60,7 +58,7 @@ def resample(dataPath=fileHandler.dicomPath + slash + "samples", new_spacing=[1,
 	image = get_pixels_hu(scan)
 	print ("Shape before resampling\t", image.shape)
 	#TODO: add timer
-	start = time.clock()
+	start = time.process_time()
 	# Determine current pixel spacing
 	try:
 		spacing = map(float, ([scan[0].SliceThickness] + [scan[0].PixelSpacing[0], scan[0].PixelSpacing[1]]))
@@ -78,7 +76,7 @@ def resample(dataPath=fileHandler.dicomPath + slash + "samples", new_spacing=[1,
 	new_spacing = spacing / real_resize_factor
 	
 	image = scipy.ndimage.interpolation.zoom(image, real_resize_factor)
-	print ("Resample done in:  " + str(time.clock()-start))
+	print ("Resample done in:  " + str(time.process_time()-start))
 	print ("Shape after resampling\t", image.shape)
 	
 	return image, new_spacing
