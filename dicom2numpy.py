@@ -72,7 +72,7 @@ def resample(dataPath=fileHandler.dicomPath + slash + "samples", new_spacing=[1,
 	resize_factor = spacing / new_spacing
 	new_real_shape = image.shape * resize_factor
 	new_shape = np.round(new_real_shape)
-	real_resize_factor = new_shape / image.shape
+	real_resize_factor = (new_shape / image.shape)*2
 	new_spacing = spacing / real_resize_factor
 	
 	image = scipy.ndimage.interpolation.zoom(image, real_resize_factor)
