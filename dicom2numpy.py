@@ -72,10 +72,14 @@ def resample(dataPath=fileHandler.dicomPath + slash + "samples", new_spacing=[1,
 	resize_factor = spacing / new_spacing
 	new_real_shape = image.shape * resize_factor
 	new_shape = np.round(new_real_shape)
-	real_resize_factor = (new_shape / image.shape)*2
+	real_resize_factor = (new_shape / image.shape)*0.5
 	new_spacing = spacing / real_resize_factor
-	
+	structuring_element = np.ones((10, 9, 9), dtype=np.bool_)
+
 	image = scipy.ndimage.interpolation.zoom(image, real_resize_factor)
+	mask_3d = scipy.ndimage.morphology.binary_erosion(image, structure=structuring_element)
+	mask_3d = mask_3d.astype(int)
+	image = image*mask_3d
 	print ("Resample done in:  " + str(time.process_time()-start))
 	print ("Shape after resampling\t", image.shape)
 	

@@ -40,6 +40,7 @@ def make_mesh(image, threshold=300, step_size=1):
 	
 	print ("Calculating surface...")
 	#https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.marching_cubes_lewiner
+	#verts, faces, norm, val = measure._marching_cubes_lewiner(p, threshold, step_size=step_size, allow_degenerate=True)
 	verts, faces, norm, val = measure.marching_cubes(p, threshold, step_size=step_size, allow_degenerate=True)
 	return verts, faces, norm
 
